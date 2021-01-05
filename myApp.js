@@ -49,14 +49,27 @@ const findOneByFood = (food, done) => {
   });
 };
 
+/* Find a person by the id using mongoose's dedicated findById method */
 const findPersonById = (personId, done) => {
-  done(null /*, data*/);
+  Person.findById(personId, function(err, data) {
+    if (err) return done(err);
+    done(null, data);
+  });
 };
 
+/* Find a person using the id, edit the document of the person and save it back to the database */
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
-
-  done(null /*, data*/);
+  Person.findById(personId, function(err, data) { // Find the document
+    if (err) done(err);
+    
+    data.favoriteFoods.push(foodToAdd);       // Edit the document
+    
+    data.save(function(err, data) {           // Save the edited document back to the database
+      if (err) done(err);
+      done(null, data);
+    });
+  });
 };
 
 const findAndUpdate = (personName, done) => {
