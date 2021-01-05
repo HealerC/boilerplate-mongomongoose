@@ -11,8 +11,18 @@ const personSchema = new mongoose.Schema({
 
 let Person = mongoose.model('Person', personSchema);
 
+/* Create a document from the Person model defined above and save the document to the database */
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  const uyi = new Person({          // A document
+    name: "Uyioghosa Nosa-Ihaza",
+    age: 20,
+    favoriteFoods: ["Beans and Plantain", "Fried Rice and Chicken", "Jollof Rice"]
+  });
+
+  uyi.save(function(err, data) {
+    if (err) return done(err);
+    done(null, data);
+  });
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
