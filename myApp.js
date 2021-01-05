@@ -25,6 +25,7 @@ const createAndSavePerson = (done) => {
   });
 };
 
+/* Create many documents (perhaps) and add them to the database from an array of object definitions */
 const createManyPeople = (arrayOfPeople, done) => {
   Person.create(arrayOfPeople, function(err, data) {
     if (err) return done(err);
@@ -32,8 +33,12 @@ const createManyPeople = (arrayOfPeople, done) => {
   })
 };
 
+/* Find all the people having a certain name */
 const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
+  Person.find({name: personName}, function(err, data) {
+    if (err) return done(err);
+    done(null, data);
+  })
 };
 
 const findOneByFood = (food, done) => {
