@@ -72,10 +72,15 @@ const findEditThenSave = (personId, done) => {
   });
 };
 
+/* Using built in classes in mongoose to find and edit */
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
-
-  done(null /*, data*/);
+  Person.findOneAndUpdate({name: personName}, {age: ageToSet}, {new: true}, 
+    function(err, updatedPerson) {
+      if (err) return done(err);
+      done(null, updatedPerson);
+    }
+  );
 };
 
 const removeById = (personId, done) => {
