@@ -100,10 +100,17 @@ const removeManyPeople = (done) => {
   });
 };
 
+/* Find documents and manipulating the results of the query result */
 const queryChain = (done) => {
-  const foodToSearch = "burrito";
-
-  done(null /*, data*/);
+  const foodToSearch = "burrito";   // Documents with this favourite foods
+  Person.find({favoriteFoods: foodToSearch})    // Find all persons with above as favorite food
+        .sort({name: 'asc'})        // But they should be sorted alphabetically ascending
+        .limit(2)                   // Just two documents should be returned
+        .select({age: 0})           // The result should exclude the age
+        .exec(function (err, result) {
+          if (err) return done(err);
+          done(null, result);       // Final result
+        });
 };
 
 /** **Well Done !!**
